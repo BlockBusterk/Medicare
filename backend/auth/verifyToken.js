@@ -4,17 +4,16 @@ import User from "../models/UserSchema.js"
 
 export const authenticate = async (req, res, next) =>{
     const authToken = req.headers.authorization;
+    
 
     //check token is exists 
     if(!authToken || !authToken.startsWith("Bearer ")){
-        return res
-        .status(401)
-        .json({success: false, message: "No token, authorization denied!"})
+        
+        return res.status(401).json({success: false, message: "No token, authorization denied "})
     }
-
    try {
     console.log(authToken);
-    const token = authToken.split(' ')[1]
+    const token = authToken.split(" ")[1];
      
     //verify token
 
@@ -28,12 +27,13 @@ export const authenticate = async (req, res, next) =>{
     if(error.name == "TokenExpiredError"){
         res.status(401).json({ message: "Token is expired"})
     }
-    return res.status(401).json({success: false, message: "Invalid token"})
+    return res.status(401).json({success: false, message: "Invalid token "+error.name})
    }
 }
 
 export const restrict = roles => async (req, res, next) =>{
     const userID = req.userID;
+   
     let user;
 
     const patient = await User.findById(userID)
