@@ -118,7 +118,7 @@ export const getAllDoctor = async(req, res) =>{
 }
 
 export const getDoctorProfile =  async(req,res)=>{
-    const doctorId = req.userId
+    const doctorId = req.userID
 
     try{
         const doctor = await Doctor.findById(doctorId)
